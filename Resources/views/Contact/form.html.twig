@@ -2,30 +2,28 @@
 
 {% block title %}Contact{% endblock %}
 
-{% block sidebar %}{% endblock %}
+{% block sidebar %}
+
+  {% if google_maps.hasMaps() %}
+    <div id="maps" class="inset-small">
+      <h1>Locatie</h1>
+      <div class="header"></div>
+      <div class="items">
+        {% for map in google_maps.getMaps() %}
+          {% autoescape false %}{{ map.render }}{% endautoescape %}
+        {% endfor %}
+      </div>
+      <div class="footer"></div>
+    </div>
+  {% endif %}
+
+{% endblock %}
 
 
 {% block body %}
   <h1>Contact formulier</h1>
   <form action="#" method="post" class="uniForm">
-
-    {% if form.errors is not empty %}
-      <div id="errorMsg">
-        {{ form_errors(form) }}
-      </div>
-    {% endif %}
-    <fieldset>
-      {% for field in form %}
-        {% if not field.ishidden %}
-          <div class="ctrlHolder">
-            {{ form_errors(field) }}
-            {{ form_label(field) }}
-            {{ form_field(field, { 'class': 'textInput' }) }}
-          </div>
-        {% endif %}
-      {% endfor %}
-      {{ form_hidden(form) }}
-    </fieldset>
+    {{ form_field(form) }}
     <div class="buttonHolder">
       <button type="submit" class="primaryAction">Submit</button>
     </div>

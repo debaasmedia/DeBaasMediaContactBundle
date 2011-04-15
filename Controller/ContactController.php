@@ -5,7 +5,9 @@
   use DeBaasMedia\Bundle\ContactBundle\Form\ContactForm
     , DeBaasMedia\Bundle\ContactBundle\Model\ContactRequest
     , Symfony\Component\HttpKernel\Exception\HttpException
-    , Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    , Symfony\Bundle\FrameworkBundle\Controller\Controller
+    , AntiMattr\GoogleBundle\Maps\StaticMap
+    , AntiMattr\GoogleBundle\Maps\Marker;
 
   /**
    * ContactRequest.
@@ -46,6 +48,21 @@
           $this->redirect($this->generateUrl('homepage'));
         }
       }
+
+      $map = new StaticMap();
+
+      $map->setId("Schravenmade & Partners Advocaten");
+      $map->setSize("316x316");
+      $map->setZoom(13);
+
+      $marker = new Marker();
+
+      $marker->setLatitude(52.1353);
+      $marker->setLongitude(5.0288);
+
+      $map->addMarker($marker);
+
+      $this->container->get('google.maps')->addMap($map);
 
       $parameters = array('form' => $form);
 
