@@ -1,0 +1,4 @@
+contact_index:
+  pattern:  "/"
+  defaults:
+    _controller: "ContactBundle:Contact:form"

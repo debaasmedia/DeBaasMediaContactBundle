@@ -1,0 +1,33 @@
+{% extends '::default.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block sidebar %}{% endblock %}
+
+
+{% block body %}
+  <h1>Contact formulier</h1>
+  <form action="#" method="post" class="uniForm">
+
+    {% if form.errors is not empty %}
+      <div id="errorMsg">
+        {{ form_errors(form) }}
+      </div>
+    {% endif %}
+    <fieldset>
+      {% for field in form %}
+        {% if not field.ishidden %}
+          <div class="ctrlHolder">
+            {{ form_errors(field) }}
+            {{ form_label(field) }}
+            {{ form_field(field, { 'class': 'textInput' }) }}
+          </div>
+        {% endif %}
+      {% endfor %}
+      {{ form_hidden(form) }}
+    </fieldset>
+    <div class="buttonHolder">
+      <button type="submit" class="primaryAction">Submit</button>
+    </div>
+  </form>
+{% endblock %}
