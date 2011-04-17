@@ -9,9 +9,11 @@
       <h1>Locatie</h1>
       <div class="header"></div>
       <div class="items">
-        {% for map in google_maps.getMaps() %}
-          {% autoescape false %}{{ map.render }}{% endautoescape %}
-        {% endfor %}
+        <a title="Bekijk de locatie van het kantoor van Schravenmade &amp; Partners advocaten op Google Maps" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Schravenmade+%26+Partners+Advocaten&aq=&sll=52.135306,5.027704&sspn=0.010984,0.033131&ie=UTF8&hq=Schravenmade+%26+Partners+Advocaten&hnear=&z=16">
+          {% for map in google_maps.getMaps() %}
+            {% autoescape false %}{{ map.render }}{% endautoescape %}
+          {% endfor %}
+        </a>
       </div>
       <div class="footer"></div>
     </div>
