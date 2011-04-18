@@ -10,7 +10,7 @@
     , AntiMattr\GoogleBundle\Maps\Marker;
 
   /**
-   * ContactRequest.
+   * ContactController
    *
    * @author  Marijn Huizendveld <marijn.huizendveld@gmail.com>
    */
