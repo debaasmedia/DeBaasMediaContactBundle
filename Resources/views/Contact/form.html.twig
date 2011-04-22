@@ -40,9 +40,25 @@
     Fax. (0346) 56 07 64
   </p>
   <form action="#" method="post" class="uniForm">
+    {{ form_errors(form) }}
     <p>Wilt u meer informatie omtrent de werkzaamheden van <em class="name">Schravenmade &amp; Partners Advocaten</em>, neem dan contact met ons op. Wanneer u het onderstaande formulier invult of een e-mail stuurt naar <a href="mailto:info@schravenmade.nl" title="Stuur een e-mail naar Schravenmade &amp; Partners Advocaten">info@schravenmade.nl</a>, zal één van onze medewerkers zo spoedig mogelijk contact met u opnemen.</p>
-    {{ form_field(form) }}
+    <div>
+      {{ form_label(form.name, "Naam") }}
+      {{ form_errors(form.name) }}
+      {{ form_field(form.name) }}
+    </div>
+    <div>
+      {{ form_label(form.emailAddress, "E-mail adres") }}
+      {{ form_errors(form.emailAddress) }}
+      {{ form_field(form.emailAddress) }}
+    </div>
+    <div>
+      {{ form_label(form.message, "Bericht") }}
+      {{ form_errors(form.message) }}
+      {{ form_field(form.message) }}
+    </div>
     <div class="buttonHolder">
+      {{ form_hidden(form) }}
       <button type="submit" class="primaryAction">Submit</button>
     </div>
   </form>
