@@ -64,9 +64,25 @@
 
       $this->container->get('google.maps')->addMap($map);
 
-      $parameters = array('form' => $form);
+      $article = $this->getEntityManager()
+                      ->getRepository('DeBaasMedia\Bundle\ArticleBundle\Entity\Article')
+                      ->findOneByUnifiedResourceNameAndNamespace('contact', 'extra');
+
+      if (NULL === $article)
+      {
+        throw new NotFoundHttpException(sprintf('There is no Article for the urn: %s', $arg_unifiedResourceName));
+      }
+
+      $parameters = array('form'    => $form
+                         ,'article' => $article
+                         );
 
       return $this->render('DeBaasMediaContactBundle:Contact:form.html.twig', $parameters);
+    }
+
+    public function getEntityManager ()
+    {
+      return $this->get('doctrine.orm.default_entity_manager');
     }
 
     /**

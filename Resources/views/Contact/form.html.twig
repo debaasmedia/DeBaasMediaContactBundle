@@ -21,24 +21,8 @@
 
 {% endblock %}
 
-
 {% block body %}
-  <h1>Contact</h1>
-  <p>U kunt vrijblijvend contact met ons opnemen via onderstaand telefoonnummer of <a href="mailto:info@schravenmade.nl" title="Stuur een e-mail naar Schravenmade &amp; Partners Advocaten">e-mail adres</a>.
-  <h2>Bezoekadres</h2>
-  <p>
-    Bisonspoor 1218 <br />
-    3605 KZ Maarssen
-  </p>
-  <h2>Postadres</h2>
-  <p>
-    Postbus 1179 <br />
-    3600BD Maarssen
-  </p>
-  <p>
-    Tel. (0346) 55 47 03 <br />
-    Fax. (0346) 56 07 64
-  </p>
+  {{ article|raw }}
   <h2>Formulier</h2>
   <form action="#" method="post" class="uniForm">
     {{ form_errors(form) }}
