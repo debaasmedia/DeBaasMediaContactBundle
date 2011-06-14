@@ -45,7 +45,8 @@
           }
 
           $this->get('session')->setFlash("notification", "Uw aanvraag is verzonden, wij nemen zo spoedig mogelijk contact met u op.");
-          $this->redirect($this->generateUrl('homepage'));
+
+          return $this->redirect($this->generateUrl('homepage'));
         }
       }
 
