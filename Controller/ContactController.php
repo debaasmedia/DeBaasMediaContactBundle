@@ -95,6 +95,7 @@
      */
     private function _processContactRequest (ContactRequest $arg_contactRequest)
     {
+      $mailer  = $this->get('mailer');
       $message = \Swift_Message::newInstance();
 
       $message->setSubject(sprintf($this->container->getParameter('contact_request.subject'), $arg_contactRequest->name))
@@ -102,7 +103,7 @@
               ->setTo($this->container->getParameter('contact_request.recipient.email_address'), $this->container->getParameter('contact_request.recipient.name'))
               ->setBody($this->renderView('DeBaasMediaContactBundle:Email:recipient.txt.twig', array("contact" => $arg_contactRequest)));
 
-      $this->get('mailer')->send($message);
+      $mailer->send($message);
     }
 
   }
