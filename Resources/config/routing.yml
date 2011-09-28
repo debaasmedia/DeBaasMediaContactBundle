@@ -1,4 +1,6 @@
-contact_index:
+de_baas_media_contact_form:
   pattern:  "/"
   defaults:
-    _controller: "ContactBundle:Contact:form"
+    _controller: "DeBaasMediaContactBundle:Contact:form"
+    _format:     "html"
+    _method:     [ "GET", "POST" ]

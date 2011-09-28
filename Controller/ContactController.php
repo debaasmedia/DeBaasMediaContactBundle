@@ -2,12 +2,12 @@
 
   namespace DeBaasMedia\Bundle\ContactBundle\Controller;
 
-  use DeBaasMedia\Bundle\ContactBundle\Form\ContactForm
+  use DeBaasMedia\Bundle\ContactBundle\Form\Type\ContactRequestType
     , DeBaasMedia\Bundle\ContactBundle\Model\ContactRequest
-    , Symfony\Component\HttpKernel\Exception\HttpException
     , Symfony\Bundle\FrameworkBundle\Controller\Controller
-    , AntiMattr\GoogleBundle\Maps\StaticMap
-    , AntiMattr\GoogleBundle\Maps\Marker;
+    , Symfony\Component\HttpFoundation\Response
+    , Symfony\Component\HttpFoundation\RedirectResponse
+    , Symfony\Component\HttpFoundation\Request;
 
   /**
    * ContactController
@@ -22,14 +22,13 @@
      *
      * @return  Response
      */
-    public function formAction ()
+    public function formAction (Request $arg_request)
     {
-      $form    = ContactForm::create($this->get('form.context'), 'contact');
-      $request = $this->get('request');
-  
-      if ('POST' === $request->getMethod())
+      $form = $this->createForm(new ContactRequestType(), new ContactRequest());
+
+      if ('POST' === $arg_request->getMethod())
       {
-        $form->bind($request, new ContactRequest());
+        $form->bindRequest($arg_request);
 
         if ($form->isValid())
         {
@@ -46,36 +45,12 @@
 
           $this->get('session')->setFlash("notification", "Uw aanvraag is verzonden, wij nemen zo spoedig mogelijk contact met u op.");
 
-          return $this->redirect($this->generateUrl('homepage'));
+          return new RedirectResponse($this->generateUrl('homepage'));
         }
       }
 
-      $map = new StaticMap();
-
-      $map->setId("Schravenmade & Partners Advocaten");
-      $map->setSize("316x316");
-      $map->setZoom(13);
-
-      $marker = new Marker();
-
-      $marker->setLatitude(52.1353);
-      $marker->setLongitude(5.0288);
-
-      $map->addMarker($marker);
-
-      $this->container->get('google.maps')->addMap($map);
-
-      $article = $this->getEntityManager()
-                      ->getRepository('DeBaasMedia\Bundle\ArticleBundle\Entity\Article')
-                      ->findOneByUnifiedResourceNameAndNamespace('contact', 'extra');
-
-      if (NULL === $article)
-      {
-        throw new NotFoundHttpException(sprintf('There is no Article for the urn: %s', $arg_unifiedResourceName));
-      }
-
-      $parameters = array('form'    => $form
-                         ,'article' => $article
+      $parameters = array('contactRequest' => $form->getData()
+                         ,'form'           => $form->createView()
                          );
 
       return $this->render('DeBaasMediaContactBundle:Contact:form.html.twig', $parameters);
@@ -104,7 +79,7 @@
               ->setTo($this->container->getParameter('contact_request.recipient.email_address'), $this->container->getParameter('contact_request.recipient.name'))
               ->setBody($this->renderView('DeBaasMediaContactBundle:Email:recipient.txt.twig', array("contact" => $arg_contactRequest)));
 
-      $mailer->send($message);
+      return $mailer->send($message);
     }
 
   }

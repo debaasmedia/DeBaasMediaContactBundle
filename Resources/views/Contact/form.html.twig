@@ -2,49 +2,9 @@
 
 {% block title %}Contact{% endblock %}
 
-{% block sidebar %}
-
-  {% if google_maps.hasMaps() %}
-    <div id="maps" class="inset-small">
-      <h1>Locatie</h1>
-      <div class="header"></div>
-      <div class="items">
-        <a title="Bekijk de locatie van het kantoor van Schravenmade &amp; Partners advocaten op Google Maps" href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Schravenmade+%26+Partners+Advocaten&aq=&sll=52.135306,5.027704&sspn=0.010984,0.033131&ie=UTF8&hq=Schravenmade+%26+Partners+Advocaten&hnear=&z=16">
-          {% for map in google_maps.getMaps() %}
-            {% autoescape false %}{{ map.render }}{% endautoescape %}
-          {% endfor %}
-        </a>
-      </div>
-      <div class="footer"></div>
-    </div>
-  {% endif %}
-
-{% endblock %}
-
 {% block body %}
-  {{ article|raw }}
-  <h2>Formulier</h2>
-  <form action="#" method="post" class="uniForm">
-    {{ form_errors(form) }}
-    <p>Wilt u meer informatie omtrent de werkzaamheden van <em class="name">Schravenmade &amp; Partners Advocaten</em>, neem dan contact met ons op. Wanneer u het onderstaande formulier invult of een e-mail stuurt naar <a href="mailto:info@schravenmade-advocaten.nl" title="Stuur een e-mail naar Schravenmade &amp; Partners Advocaten">info@schravenmade-advocaten.nl</a>, zal één van onze medewerkers zo spoedig mogelijk contact met u opnemen.</p>
-    <div>
-      {{ form_label(form.name, "Naam") }}
-      {{ form_errors(form.name) }}
-      {{ form_field(form.name) }}
-    </div>
-    <div>
-      {{ form_label(form.emailAddress, "E-mail adres") }}
-      {{ form_errors(form.emailAddress) }}
-      {{ form_field(form.emailAddress) }}
-    </div>
-    <div>
-      {{ form_label(form.message, "Bericht") }}
-      {{ form_errors(form.message) }}
-      {{ form_field(form.message) }}
-    </div>
-    <div class="buttonHolder">
-      {{ form_hidden(form) }}
-      <button type="submit" class="primaryAction">Submit</button>
-    </div>
+  <form action="{{ path('de_baas_media_contact_form') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input id="contact_submit" type="submit" />
   </form>
 {% endblock %}
