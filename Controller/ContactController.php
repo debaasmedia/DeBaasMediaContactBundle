@@ -5,7 +5,10 @@
   use DeBaasMedia\Bundle\ContactBundle\Form\Type\ContactRequestType
     , DeBaasMedia\Bundle\ContactBundle\Model\ContactRequest
     , Symfony\Component\HttpKernel\Exception\HttpException
-    , Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    , Symfony\Bundle\FrameworkBundle\Controller\Controller
+    , Symfony\Component\HttpFoundation\Response
+    , Symfony\Component\HttpFoundation\RedirectResponse
+    , Symfony\Component\HttpFoundation\Request;
 
   /**
    * ContactController
@@ -20,7 +23,7 @@
      *
      * @return  Response
      */
-    public function formAction ()
+    public function formAction (Request $arg_request)
     {
       $form = $this->createForm(new ContactRequestType(), new ContactRequest());
 
@@ -47,8 +50,8 @@
         }
       }
 
-      $parameters = array('subscription' => $subscription
-                         ,'form'         => $form->createView()
+      $parameters = array('contactRequest' => $form->getData()
+                         ,'form'           => $form->createView()
                          );
 
       return $this->render('DeBaasMediaContactBundle:Contact:form.html.twig', $parameters);
